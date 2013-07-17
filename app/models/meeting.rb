@@ -16,4 +16,9 @@ class Meeting < ActiveRecord::Base
     Rails.cache.fetch([self, "student_name"]) {student.to_a}
   end
 
+  def self.cached_meeting_eagerly
+    Rails.cache.fetch([self, "meetings"]) {self.includes(:student, :instructor).select("meetings.*, students.name as student_name, instructors.name as instructor_name").all}
+  end
+
+
 end
