@@ -17,11 +17,11 @@
             </thead>
             <tbody>
               <% @days.each do |day| %>
-                <% @meetings.where("week = ? AND day = ?", week, day).each do |meeting| %>
+                <% @meetings.find_all{|meeting| meeting.day == day && meeting.week == week}.each do |meeting| %>
                   <tr class="<%= day.even? ? 'even_day' : 'odd_day' %> <%= 'this_student' if params[:student].to_s.downcase == meeting.student.name.downcase %>">
                     <td class="day"><%= meeting.day_name %></td>
-                    <td class="student"><%= meeting.student.name %></td>
-                    <td class="instructor"><%= meeting.instructor.name %></td>
+                    <td class="student"><%= meeting.student_name %></td>
+                    <td class="instructor"><%= meeting.instructor_name %></td>
                   </tr>
                 <% end %>
               <% end %>
